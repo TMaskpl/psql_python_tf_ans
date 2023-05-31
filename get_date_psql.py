@@ -1,6 +1,7 @@
 #! /usr/bin/evn python3
 
 from env import *
+
 import psycopg2
 import json
 import re
@@ -31,18 +32,22 @@ def get_select(conn):
         
         list.append({"id": id})
         list.append({"nazwa": nazwa})
-
-    with open('output.json', 'w', encoding='utf-8') as f:
-        json.dump(dict, f, ensure_ascii=False, indent=4)
+    
+    write_to_json('output.json')
 
     conn.close()
     
-def get_json_data(file):
-    with open(file) as json_data:
+def write_to_json(output_file):
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(dict, f, ensure_ascii=False, indent=4)
+
+def get_json_data(output_file):
+    with open(output_file) as json_data:
         data = json.load(json_data)
-    print(data[0])
+
+    print(data[1]["nazwa"])
 
 if __name__=='__main__':
-    conn = get_connection()
-    get_select(conn)
-    # get_json_data("output.json")
+    # conn = get_connection()
+    # get_select(conn)
+    get_json_data(output_file)
