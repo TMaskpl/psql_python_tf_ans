@@ -2,7 +2,8 @@
 
 from env import *
 import psycopg2
-import json, jsonpath_ng
+import json
+import re
 
  
 def get_connection():
@@ -23,28 +24,27 @@ def get_select(conn):
     curr.execute("SELECT id, nazwa FROM public.customer;")
     data = curr.fetchall()
 
-    list = []
-
+    dict = {}
+    parameters = []
+    
     for row in data:
         id = str(row[0]).replace('(','').replace(')','').replace("'","").replace(',','')
         nazwa = str(row[1]).replace('(','').replace(')','').replace("'","").replace(',','')
+        
+        dict.update({"id": id})
+        dict.update({"nazwa": nazwa})
+        parameters.append(dict)
 
-        list.append(f'id: {id}')
-        list.append(f'nazwa: {nazwa}')
-
-    j = json.dumps({'results': list})
-    print(j)
+    with open('output.json', 'w', encoding='utf-8') as f:
+        json.dump(parameters, f, ensure_ascii=False, indent=4)
 
     conn.close()
     
-def get_var_from_json():
-    with open("output.json") as json_file:
-        json_data = json.load(json_file)
 
-    y = json.dumps(json_data)
-    print(type(y))
-    
+def get_jason_data():
+    pass
+
 if __name__=='__main__':
     # conn = get_connection()
     # get_select(conn)
-    get_var_from_json()
+    get_jason_data()
