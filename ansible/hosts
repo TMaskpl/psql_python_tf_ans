@@ -1,0 +1,2 @@
+[bagisto]
+tst ansible_host=10.20.222.207 ansible_user=tmask ansible_password=DN1234zok!
