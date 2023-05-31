@@ -6,7 +6,57 @@
 
   tasks:
 
+  - name: "Creates directory {{nazwa}}"
+    file:
+      path: "/opt/tst/{{nazwa}}"
+      state: directory
+
+  - name: "Creates directory {{nazwa}}/bin"
+    file:
+      path: "/opt/tst/{{nazwa}}/bin"
+      state: directory
+
+  - name: "Creates directory {{nazwa}}/workspace"
+    file:
+      path: "/opt/tst/{{nazwa}}/workspace"
+      state: directory
+
+  - name: "Creates directory {{nazwa}}/.configs"
+    file:
+      path: "/opt/tst/{{nazwa}}/.configs"
+      state: directory
+
   - name: Copy docker-compose.yml with template
-    ansible.builtin.template:
+    template:
       src: docker-compose.yml.j2
-      dest: /opt/tst/docker-compose.yml
+      dest: "/opt/tst/{{nazwa}}/docker-compose.yml"
+
+  - name: Copy setup.sh with template
+    template:
+      src: setup.sh.j2
+      dest: "/opt/tst/{{nazwa}}/setup.sh"
+
+  - name: Copy mysql-container.sh with template
+    template:
+      src: mysql-container.sh.j2
+      dest: "/opt/tst/{{nazwa}}/bin/mysql-container.sh"
+
+  - name: Copy php-apache-container.sh with template
+    template:
+      src: php-apache-container.sh
+      dest: "/opt/tst/{{nazwa}}/bin/php-apache-container.sh"
+
+  - name: Copy .env with template
+    template:
+      src: .env.j2
+      dest: "/opt/tst/{{nazwa}}/.configs/.env"
+
+  - name: Copy .env.testing with template
+    template:
+      src: .env.testing.j2
+      dest: "/opt/tst/{{nazwa}}/.configs/.env.testing"
+
+  - name: Copy apache.conf with template
+    template:
+      src: apache.conf.j2
+      dest: "/opt/tst/{{nazwa}}/.configs/apache.conf"
