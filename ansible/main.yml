@@ -36,6 +36,11 @@
       src: setup.sh.j2
       dest: "/opt/tst/{{nazwa}}/setup.sh"
 
+  - name: Copy Dockerfile with template
+    template:
+      src: Dockerfile.j2
+      dest: "/opt/tst/{{nazwa}}/Dockerfile"
+
   - name: Copy mysql-container.sh with template
     template:
       src: mysql-container.sh.j2
@@ -43,7 +48,7 @@
 
   - name: Copy php-apache-container.sh with template
     template:
-      src: php-apache-container.sh
+      src: php-apache-container.sh.j2
       dest: "/opt/tst/{{nazwa}}/bin/php-apache-container.sh"
 
   - name: Copy .env with template
