@@ -1,0 +1,12 @@
+---
+- hosts: tst
+  gather_facts: false
+  vars:
+    ansible_host_key_checking: false
+
+  tasks:
+
+  - name: Copy docker-compose.yml with template
+    ansible.builtin.template:
+      src: docker-compose.yml.j2
+      dest: /opt/tst/docker-compose.yml
